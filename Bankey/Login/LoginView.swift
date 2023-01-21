@@ -32,7 +32,7 @@ extension LoginView {
     }
 
     func configureLayout() {
-
+        
     }
 }
 
