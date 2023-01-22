@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        // ✨ 루트 뷰컨트롤러
+        // ✨TIP: 루트 뷰컨트롤러 설정
         window?.rootViewController = LoginViewController()
 
         return true
