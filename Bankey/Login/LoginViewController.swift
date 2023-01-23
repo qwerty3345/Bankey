@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol LogoutDelegate: AnyObject {
+    func didLogout()
+}
+
 protocol LoginViewControllerDelegate: AnyObject {
 //    func didLogin(_ sender: LoginViewController)    // ✨TIP: 데이터를 다시 전달하려는 경우... 컨벤션이기도 함.
     func didLogin()
@@ -68,7 +72,6 @@ final class LoginViewController: UIViewController {
         label.textAlignment = .center
         label.textColor = .systemRed
         label.numberOfLines = 0
-        label.text = "Error Failure"
         label.isHidden = true
         return label
     }()
@@ -81,6 +84,17 @@ final class LoginViewController: UIViewController {
         configureLayout()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if #available(iOS 15.0, *) {
+            signInButton.configuration?.showsActivityIndicator = false
+        }
+
+        loginView.usernameTextField.text = ""
+        loginView.passwordTextField.text = ""
+        errorMessageLabel.isHidden = true
+    }
 
     // MARK: - Helpers
 }
