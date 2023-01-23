@@ -12,9 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    let loginViewController = LoginViewController()
-    let onboardingContainerViewController = OnboardingContainerViewController()
-    let dummyViewController = DummyViewController()
+    private let loginViewController = LoginViewController()
+    private let onboardingContainerViewController = OnboardingContainerViewController()
+    private let dummyViewController = DummyViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -35,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: LoginViewControllerDelegate {
     func didLogin() {
+        if LocalState.hasOnboarded {
+            setRootViewController(dummyViewController)
+            return
+        }
         setRootViewController(onboardingContainerViewController)
     }
 }
@@ -42,6 +46,7 @@ extension AppDelegate: LoginViewControllerDelegate {
 extension AppDelegate: OnboardingContainerViewControllerDelegate {
     func didFinishOnboarding() {
         setRootViewController(dummyViewController)
+        LocalState.hasOnboarded = true
     }
 }
 
