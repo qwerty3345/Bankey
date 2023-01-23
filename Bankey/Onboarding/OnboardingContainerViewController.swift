@@ -7,15 +7,27 @@
 
 import UIKit
 
-class OnboardingContainerViewController: UIViewController {
+protocol OnboardingContainerViewControllerDelegate: AnyObject {
+    func didFinishOnboarding()
+}
+
+final class OnboardingContainerViewController: UIViewController {
+
+    // MARK: - Properties
+    weak var delegate: OnboardingContainerViewControllerDelegate?
 
     let pageViewController: UIPageViewController
     var pages = [UIViewController]()
-    var currentVC: UIViewController {
-        didSet {
-        }
-    }
+    var currentVC: UIViewController
+    let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("닫기", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
+        button.addTarget(self, action: #selector(tappedCloseButton), for: .touchUpInside)
+        return button
+    }()
 
+    // MARK: - Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
@@ -39,10 +51,12 @@ class OnboardingContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureUI()
+        configurePageViewUI()
+        configureButtonUI()
     }
 
-    func configureUI() {
+    // MARK: - Helpers
+    private func configurePageViewUI() {
         view.backgroundColor = .systemPurple
 
         // ✨TIP: "부모" 뷰 컨트롤러에 "자식" 뷰 컨트롤러를 추가함 (아래 3줄!)
@@ -62,6 +76,20 @@ class OnboardingContainerViewController: UIViewController {
 
         pageViewController.setViewControllers([pages.first!], direction: .forward, animated: false)
         currentVC = pages.first!
+    }
+    
+    private func configureButtonUI() {
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(closeButton)
+        NSLayoutConstraint.activate([
+            closeButton.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            closeButton.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
+        ])
+    }
+
+    // MARK: - Actions
+    @objc func tappedCloseButton() {
+        delegate?.didFinishOnboarding()
     }
 
 }

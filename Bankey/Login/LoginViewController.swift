@@ -7,10 +7,17 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+protocol LoginViewControllerDelegate: AnyObject {
+//    func didLogin(_ sender: LoginViewController)    // ✨TIP: 데이터를 다시 전달하려는 경우... 컨벤션이기도 함.
+    func didLogin()
+}
+
+final class LoginViewController: UIViewController {
 
     // MARK: - Properties
     let loginView = LoginView()
+
+    weak var delegate: LoginViewControllerDelegate?
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -146,7 +153,9 @@ extension LoginViewController {
             return
         }
 
-        if username.lowercased() == "mason" && password == "12345678" {
+        if username.lowercased() == "mason" && password == "mason" {
+            delegate?.didLogin()
+
             // ✨TIP: 버튼의 로딩 인디케이터를 추가할 수 있음 (iOS 15 이상 적용)
             if #available(iOS 15.0, *) {
                 // ✨TIP: indicator 를 위한 configuration
