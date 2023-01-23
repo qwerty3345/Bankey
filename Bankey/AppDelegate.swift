@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
         // ✨TIP: 루트 뷰컨트롤러 설정
-        window?.rootViewController = OnboardingContainerViewController()
+        window?.rootViewController = OnboardingViewController()
 
         return true
     }
