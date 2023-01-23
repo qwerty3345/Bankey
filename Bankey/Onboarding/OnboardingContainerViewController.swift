@@ -64,6 +64,9 @@ final class OnboardingContainerViewController: UIViewController {
         view.addSubview(pageViewController.view)
         pageViewController.didMove(toParent: self)  // ✨ 자식에게도 부모를 추가해줌
 
+        pageViewController.setViewControllers([pages.first!], direction: .forward, animated: false)
+        currentVC = pages.first!
+
         pageViewController.dataSource = self
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -73,9 +76,6 @@ final class OnboardingContainerViewController: UIViewController {
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-
-        pageViewController.setViewControllers([pages.first!], direction: .forward, animated: false)
-        currentVC = pages.first!
     }
     
     private func configureButtonUI() {

@@ -7,6 +7,8 @@
 
 import UIKit
 
+let appColor: UIColor = .systemIndigo
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let loginViewController = LoginViewController()
     private let onboardingContainerViewController = OnboardingContainerViewController()
     private let dummyViewController = DummyViewController()
+    private let mainViewController = MainViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -27,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dummyViewController.logoutDelegate = self
 
         // ✨TIP: 루트 뷰컨트롤러 설정
-        window?.rootViewController = loginViewController
+//        window?.rootViewController = loginViewController
+        window?.rootViewController = mainViewController
 
         return true
     }
