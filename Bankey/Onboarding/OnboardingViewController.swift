@@ -15,28 +15,24 @@ class OnboardingViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 20
         stack.alignment = .center
-        stack.backgroundColor = .systemPurple
         return stack
     }()
 
-    let imageView: UIImageView = {
+    let heroImageName: String
+    let heroImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "delorean")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
 
-    let label: UILabel = {
+    let titleText: String
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .title3)
         label.adjustsFontForContentSizeCategory = true
-        label.text = """
-                    Bankey 앱은 빠르고 사용하기 좋은 앱입니다.
-                    또한 레트로 풍의 블라블라...
-                    블라블라 설명...
-                    """
         return label
     }()
 
@@ -48,18 +44,30 @@ class OnboardingViewController: UIViewController {
         configureUI()
     }
 
+    init(heroImageName: String, titleText: String) {
+        self.heroImageName = heroImageName
+        self.titleText = titleText
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Actions
 
 
     // MARK: - Helpers
     func configureUI() {
+        view.backgroundColor = .white
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        heroImageView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(stackView)
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(label)
+        stackView.addArrangedSubview(heroImageView)
+        stackView.addArrangedSubview(titleLabel)
 
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -67,5 +75,7 @@ class OnboardingViewController: UIViewController {
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 1)
         ])
 
+        heroImageView.image = UIImage(named: heroImageName)
+        titleLabel.text = titleText
     }
 }

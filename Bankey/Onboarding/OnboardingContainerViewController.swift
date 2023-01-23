@@ -19,9 +19,9 @@ class OnboardingContainerViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-        let page1 = ViewController1()
-        let page2 = ViewController2()
-        let page3 = ViewController3()
+        let page1 = OnboardingViewController(heroImageName: "delorean", titleText: "Bankey 앱은 빠르고 사용하기 좋은 앱입니다.\n또한 레트로 풍의 블라블라...\n블라블라 설명...")
+        let page2 = OnboardingViewController(heroImageName: "world", titleText: "Bankey 앱은 빠르고 사용하기 좋은 앱입니다.\n또한 레트로 풍의 블라블라...\n블라블라 설명...")
+        let page3 = OnboardingViewController(heroImageName: "thumbs", titleText: "Bankey 앱은 빠르고 사용하기 좋은 앱입니다.\n또한 레트로 풍의 블라블라...\n블라블라 설명...")
 
         pages.append(page1)
         pages.append(page2)
@@ -39,6 +39,10 @@ class OnboardingContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureUI()
+    }
+
+    func configureUI() {
         view.backgroundColor = .systemPurple
 
         // ✨TIP: "부모" 뷰 컨트롤러에 "자식" 뷰 컨트롤러를 추가함 (아래 3줄!)
@@ -93,27 +97,4 @@ extension OnboardingContainerViewController: UIPageViewControllerDataSource {
         return pages.firstIndex(of: self.currentVC) ?? 0
     }
 
-}
-
-
-// MARK: - ViewControllers
-class ViewController1: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemRed
-    }
-}
-
-class ViewController2: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGreen
-    }
-}
-
-class ViewController3: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
-    }
 }
