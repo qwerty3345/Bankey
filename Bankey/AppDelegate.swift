@@ -31,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // ✨TIP: 루트 뷰컨트롤러 설정
 //        window?.rootViewController = loginViewController
-        window?.rootViewController = mainViewController
+//        window?.rootViewController = mainViewController
+        window?.rootViewController = AccountSummaryViewController()
 
         return true
     }

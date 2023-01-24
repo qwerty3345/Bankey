@@ -17,6 +17,7 @@ final class MainViewController: UITabBarController {
 
         setupViews()
         setupTabbar()
+        setStatusBar()
     }
 
     // MARK: - Actions
@@ -25,7 +26,7 @@ final class MainViewController: UITabBarController {
     // MARK: - Helpers
 
     private func setupViews() {
-        let summaryVC = DummyViewController()
+        let summaryVC = AccountSummaryViewController()
         let moneyVC = DummyViewController()
         let moreVC = DummyViewController()
 
