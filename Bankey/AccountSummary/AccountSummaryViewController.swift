@@ -11,15 +11,7 @@ import UIKit
 final class AccountSummaryViewController: UIViewController {
 
     // MARK: - Properties
-
-    let games = [
-        "Pacman",
-        "Space Invadors",
-        "Space Patrol"
-    ]
-
     var tableView = UITableView()
-
 
     let stackView: UIStackView = {
         let stack = UIStackView()
@@ -49,6 +41,10 @@ final class AccountSummaryViewController: UIViewController {
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+
+        tableView.register(AccountSummaryCell.self, forCellReuseIdentifier: AccountSummaryCell.reuseIdentifier)
+        tableView.rowHeight = AccountSummaryCell.rowHeight
+        tableView.tableFooterView = UIView()
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -83,12 +79,12 @@ extension AccountSummaryViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension AccountSummaryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return games.count
+        return 5
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = games[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseIdentifier, for: indexPath)
+
         return cell
     }
 }
