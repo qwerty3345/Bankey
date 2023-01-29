@@ -11,6 +11,7 @@ import UIKit
 final class AccountSummaryViewController: UIViewController {
 
     // MARK: - Properties
+    var accountViewModels: [AccountSummaryCell.ViewModel] = []
     var tableView = UITableView()
 
     let stackView: UIStackView = {
@@ -27,6 +28,7 @@ final class AccountSummaryViewController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
+        fetchData()
     }
 
     // MARK: - Actions
@@ -69,6 +71,25 @@ final class AccountSummaryViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+extension AccountSummaryViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return accountViewModels.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !accountViewModels.isEmpty,
+              let accountViewModel = accountViewModels[safe: indexPath.row],
+              let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseIdentifier, for: indexPath) as? AccountSummaryCell else {
+            return UITableViewCell()
+        }
+
+        cell.configure(with: accountViewModel)
+
+        return cell
+    }
+}
+
 // MARK: - UITableViewDelegate
 extension AccountSummaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -76,15 +97,15 @@ extension AccountSummaryViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - UITableViewDataSource
-extension AccountSummaryViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
+// MARK: - Data
+extension AccountSummaryViewController {
+    private func fetchData() {
+        let savings = AccountSummaryCell.ViewModel(accoundType: .banking, accountName: "기본 계좌")
+        let visa = AccountSummaryCell.ViewModel(accoundType: .creditCard, accountName: "신한카드")
+        let investment = AccountSummaryCell.ViewModel(accoundType: .investment, accountName: "테슬라 주식")
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseIdentifier, for: indexPath)
-
-        return cell
+        accountViewModels.append(savings)
+        accountViewModels.append(visa)
+        accountViewModels.append(investment)
     }
 }

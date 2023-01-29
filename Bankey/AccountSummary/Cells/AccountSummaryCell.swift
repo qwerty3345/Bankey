@@ -9,7 +9,28 @@ import UIKit
 
 class AccountSummaryCell: UITableViewCell {
 
+    enum AccountType: String {
+        case banking = "은행"
+        case creditCard = "신용카드"
+        case investment = "투자"
+    }
+
+    struct ViewModel {
+        let accoundType: AccountType
+        let accountName: String
+//        let balance: Decimal
+
+//        var balanceAsAttributedString: NSAttributedString {
+//
+//        }
+    }
+
     // MARK: - Properties
+
+    // ✨TIP: 네트워킹으로 비동기적으로 받아올 것이기에,
+    // init에서 받아오지 않고 nil 을 초기값으로 두었다가 초기화하는 방식으로 구현!
+    var viewModel: ViewModel? = nil
+
     private let typeLabel = UILabel()
     private let underlineView = UIView()
     private let nameLabel = UILabel()
@@ -115,5 +136,27 @@ class AccountSummaryCell: UITableViewCell {
         rootString.append(centString)
 
         return rootString
+    }
+}
+
+// MARK: - ViewModel Configuration
+extension AccountSummaryCell {
+    // ✨TIP: ViewModel을 바탕으로 cell 정보를 설정
+    func configure(with viewModel: ViewModel) {
+        typeLabel.text = viewModel.accoundType.rawValue
+        nameLabel.text = viewModel.accountName
+//        balanceAmountLabel.attributedText = viewModel.balanceAsAttributedString
+
+        switch viewModel.accoundType {
+        case .banking:
+            underlineView.backgroundColor = appColor
+            balanceLabel.text = "현재 잔고"
+        case .creditCard:
+            underlineView.backgroundColor = .systemOrange
+            balanceLabel.text = "사용액"
+        case .investment:
+            underlineView.backgroundColor = .systemPurple
+            balanceLabel.text = "평가금액"
+        }
     }
 }
