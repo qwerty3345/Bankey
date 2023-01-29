@@ -16,13 +16,13 @@ class AccountSummaryCell: UITableViewCell {
     }
 
     struct ViewModel {
-        let accoundType: AccountType
+        let accountType: AccountType
         let accountName: String
-//        let balance: Decimal
+        let balance: Decimal
 
-//        var balanceAsAttributedString: NSAttributedString {
-//
-//        }
+        var balanceAsAttributedString: NSAttributedString {
+            CurrencyFormatter.makeAttributedCurrency(balance)
+        }
     }
 
     // MARK: - Properties
@@ -83,7 +83,7 @@ class AccountSummaryCell: UITableViewCell {
         balanceAmountLabel.font = .preferredFont(forTextStyle: .body)
         balanceAmountLabel.adjustsFontForContentSizeCategory = true
         // ✨TIP: attributedText 를 NSAttributedString 으로 설정 해 줌으로서 커스텀!
-        balanceAmountLabel.attributedText = makeFormattedBalance(dollors: "999,999", cents: "23")
+        balanceAmountLabel.attributedText = makeFormattedBalance(dollors: "XXX,XXX", cents: "XX")
 
         balanceStackView.translatesAutoresizingMaskIntoConstraints = false
         balanceStackView.axis = .vertical
@@ -143,11 +143,11 @@ class AccountSummaryCell: UITableViewCell {
 extension AccountSummaryCell {
     // ✨TIP: ViewModel을 바탕으로 cell 정보를 설정
     func configure(with viewModel: ViewModel) {
-        typeLabel.text = viewModel.accoundType.rawValue
+        typeLabel.text = viewModel.accountType.rawValue
         nameLabel.text = viewModel.accountName
-//        balanceAmountLabel.attributedText = viewModel.balanceAsAttributedString
+        balanceAmountLabel.attributedText = viewModel.balanceAsAttributedString
 
-        switch viewModel.accoundType {
+        switch viewModel.accountType {
         case .banking:
             underlineView.backgroundColor = appColor
             balanceLabel.text = "현재 잔고"

@@ -11,7 +11,14 @@ import UIKit
 final class AccountSummaryViewController: UIViewController {
 
     // MARK: - Properties
-    var accountViewModels: [AccountSummaryCell.ViewModel] = []
+    var accountViewModels: [AccountSummaryCell.ViewModel] = [] {
+        didSet {
+            // ✨TIP: tableView reloadData 에 애니메이션 부여
+            UIView.transition(with: tableView, duration: 0.3, options: .transitionCrossDissolve) {
+                self.tableView.reloadData()
+            }
+        }
+    }
     var tableView = UITableView()
 
     let stackView: UIStackView = {
@@ -100,12 +107,41 @@ extension AccountSummaryViewController: UITableViewDelegate {
 // MARK: - Data
 extension AccountSummaryViewController {
     private func fetchData() {
-        let savings = AccountSummaryCell.ViewModel(accoundType: .banking, accountName: "기본 계좌")
-        let visa = AccountSummaryCell.ViewModel(accoundType: .creditCard, accountName: "신한카드")
-        let investment = AccountSummaryCell.ViewModel(accoundType: .investment, accountName: "테슬라 주식")
+        let savings = AccountSummaryCell.ViewModel(accountType: .banking,
+                                                   accountName: "기본 계좌",
+                                                   balance: 929466.23)
+        let chequing = AccountSummaryCell.ViewModel(accountType: .banking,
+                                                    accountName: "No-Fee All-In Chequing",
+                                                    balance: 17562.44)
+        let wooriCard = AccountSummaryCell.ViewModel(accountType: .creditCard,
+                                                accountName: "우리카드",
+                                                balance: 412.83)
+        let masterCard = AccountSummaryCell.ViewModel(accountType: .creditCard,
+                                                      accountName: "학생용 마스터카드",
+                                                      balance: 50.83)
+        let investment1 = AccountSummaryCell.ViewModel(accountType: .investment,
+                                                       accountName: "Tax-Free 투자",
+                                                       balance: 2000.00)
+        let investment2 = AccountSummaryCell.ViewModel(accountType: .investment,
+                                                       accountName: "Growth Fund",
+                                                       balance: 15000.00)
 
-        accountViewModels.append(savings)
-        accountViewModels.append(visa)
-        accountViewModels.append(investment)
+        // 네트워킹 환경 재현 (0.5초, 1초, 1.5초 후에 데이터 받아와짐)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            self.accountViewModels.append(savings)
+            self.accountViewModels.append(chequing)
+
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            self.accountViewModels.append(wooriCard)
+            self.accountViewModels.append(masterCard)
+
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            self.accountViewModels.append(investment1)
+            self.accountViewModels.append(investment2)
+        }
+
     }
 }

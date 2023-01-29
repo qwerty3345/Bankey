@@ -14,6 +14,7 @@ public class LocalState {
         case hasOnboarded
     }
 
+    // ✨TIP: 유저가 처음 앱을 키고 온보딩 단계를 거쳤는지 확인하기 위한 bool 상태값
     public static var hasOnboarded: Bool {
         get {
             return UserDefaults.standard.bool(forKey: Keys.hasOnboarded.rawValue)
