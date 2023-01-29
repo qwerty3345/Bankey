@@ -7,7 +7,7 @@
 
 import UIKit
 
-let appColor: UIColor = .systemIndigo
+let appColor: UIColor = .systemGray5
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
