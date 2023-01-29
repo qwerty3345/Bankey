@@ -43,6 +43,7 @@ final class AccountSummaryViewController: UIViewController {
     // MARK: - Helpers
     private func configureUI() {
         setupTableView()
+        setupTableHeaderView()
     }
 
     private func setupTableView() {
@@ -58,12 +59,24 @@ final class AccountSummaryViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
+    private func setupTableHeaderView() {
+        let headerView = AccountSummaryHeaderView(frame: .zero)
+
+        // ✨TIP: Header 사이즈가 설정됨 (최소 사이즈로 - Intrinsic Size)
+        var size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        // ✨TIP: width 가 꽉차게 설정됨
+        size.width = view.frame.width
+        headerView.frame.size = size
+
+        tableView.tableHeaderView = headerView
+    }
 }
 
 // MARK: - UITableViewDelegate
 extension AccountSummaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+
     }
 }
 
@@ -78,6 +91,4 @@ extension AccountSummaryViewController: UITableViewDataSource {
         cell.textLabel?.text = games[indexPath.row]
         return cell
     }
-
-
 }
