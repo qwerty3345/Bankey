@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let onboardingContainerViewController = OnboardingContainerViewController()
     private let mainViewController = MainViewController()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
+
+        registerForNotifications()
 
         let viewController = mainViewController
         viewController.setStatusBar()
@@ -35,6 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = viewController
 
         return true
+    }
+
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didLogout),
+                                               name: .logout,
+                                               object: nil)
     }
 }
 
@@ -56,7 +66,7 @@ extension AppDelegate: OnboardingContainerViewControllerDelegate {
 }
 
 extension AppDelegate: LogoutDelegate {
-    func didLogout() {
+    @objc func didLogout() {
         setRootViewController(loginViewController)
     }
 }

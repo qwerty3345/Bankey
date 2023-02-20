@@ -9,8 +9,7 @@ import UIKit
 import UIKit
 
 final class AccountSummaryViewController: UIViewController {
-
-    // MARK: - Properties
+    // MARK: - UI Properties
     var accountViewModels: [AccountSummaryCell.ViewModel] = [] {
         didSet {
             // ✨TIP: tableView reloadData 에 애니메이션 부여
@@ -30,6 +29,15 @@ final class AccountSummaryViewController: UIViewController {
         return stack
     }()
 
+    lazy var logoutBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Logout",
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(tappedLogout))
+        barButtonItem.tintColor = .label
+        return barButtonItem
+    }()
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +47,19 @@ final class AccountSummaryViewController: UIViewController {
     }
 
     // MARK: - Actions
-
+    @objc func tappedLogout(sender: UIButton) {
+        NotificationCenter.default.post(name: .logout, object: nil)
+    }
 
     // MARK: - Helpers
     private func configureUI() {
         setupTableView()
         setupTableHeaderView()
+        setupNavigationBar()
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = logoutBarButtonItem
     }
 
     private func setupTableView() {
@@ -143,6 +158,5 @@ extension AccountSummaryViewController {
             self.accountViewModels.append(investment1)
             self.accountViewModels.append(investment2)
         }
-
     }
 }

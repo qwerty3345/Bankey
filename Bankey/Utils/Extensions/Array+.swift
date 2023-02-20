@@ -1,5 +1,5 @@
 //
-//  Array+Extensions.swift
+//  Array+.swift
 //  Bankey
 //
 //  Created by Mason Kim on 2023/01/29.
