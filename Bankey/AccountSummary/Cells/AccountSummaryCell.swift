@@ -78,6 +78,7 @@ class AccountSummaryCell: UITableViewCell {
         balanceLabel.font = .preferredFont(forTextStyle: .body)
         balanceLabel.adjustsFontForContentSizeCategory = true
         balanceLabel.text = "계좌 잔고"
+        balanceLabel.textAlignment = .right
 
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceAmountLabel.font = .preferredFont(forTextStyle: .body)
