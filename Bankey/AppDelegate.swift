@@ -7,7 +7,7 @@
 
 import UIKit
 
-let appColor: UIColor = .systemGray3
+let appColor: UIColor = .systemTeal
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let loginViewController = LoginViewController()
     private let onboardingContainerViewController = OnboardingContainerViewController()
-    private let dummyViewController = DummyViewController()
     private let mainViewController = MainViewController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -27,12 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
-        dummyViewController.logoutDelegate = self
 
+        let viewController = mainViewController
+        viewController.setStatusBar()
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = appColor
         // ✨TIP: 루트 뷰컨트롤러 설정
-//        window?.rootViewController = loginViewController
-//        window?.rootViewController = mainViewController
-        window?.rootViewController = AccountSummaryViewController()
+        window?.rootViewController = viewController
 
         return true
     }
@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: LoginViewControllerDelegate {
     func didLogin() {
         if LocalState.hasOnboarded {
-            setRootViewController(dummyViewController)
+            setRootViewController(mainViewController)
             return
         }
         setRootViewController(onboardingContainerViewController)
@@ -50,7 +50,7 @@ extension AppDelegate: LoginViewControllerDelegate {
 
 extension AppDelegate: OnboardingContainerViewControllerDelegate {
     func didFinishOnboarding() {
-        setRootViewController(dummyViewController)
+        setRootViewController(mainViewController)
         LocalState.hasOnboarded = true
     }
 }

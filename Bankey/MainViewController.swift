@@ -29,11 +29,7 @@ final class MainViewController: UITabBarController {
         let summaryVC = AccountSummaryViewController()
         let moneyVC = DummyViewController()
         let moreVC = DummyViewController()
-
-        summaryVC.view.backgroundColor = .blue
-        moneyVC.view.backgroundColor = .systemPurple
-        moreVC.view.backgroundColor = .brown
-
+        
         summaryVC.setTabBarImage(imageName: "list.dash.header.rectangle", title: "Summary")
         moneyVC.setTabBarImage(imageName: "arrow.left.arrow.right", title: "Money")
         moreVC.setTabBarImage(imageName: "ellipsis.circle", title: "More")
